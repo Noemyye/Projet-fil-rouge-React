@@ -5,6 +5,11 @@ import { getAnalytics } from "firebase/analytics";
 import type { Analytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import type { Auth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import type { Firestore } from "firebase/firestore"
+import { collection, query, where, getDocs } from "firebase/firestore";
+
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -24,5 +29,23 @@ const firebaseConfig = {
 const app: FirebaseApp = initializeApp(firebaseConfig);
 const analytics: Analytics = getAnalytics(app);
 const auth: Auth = getAuth(app);
+const db: Firestore = getFirestore(app);
 
-export { app, auth };
+
+
+export const getMoviesBySaga = async (saga: string) => {
+  const q = query(
+    collection(db, "movies"),
+    where("saga", "==", saga)
+  );
+
+  const snapshot = await getDocs(q);
+
+  return snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data()
+  }));
+};
+
+
+export { app, auth, db };

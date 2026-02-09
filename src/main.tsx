@@ -13,7 +13,10 @@ createRoot(document.getElementById('root')!).render(
       <Header/>
       <div>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Navigate to="/marvel" replace />} />
+          <Route path="/marvel" element={<Home sagaId="marvel" />} />
+          <Route path="/the-hunger-games" element={<Home sagaId="hunger-games" />} />
+          <Route path="/star-wars" element={<Home sagaId="star-wars" />} />
           <Route path="/profil" element={<Profil />} />
           <Route path="/auth/:mode" element={<Auth />} />
           <Route path="/login" element={<Navigate to="/auth/login" replace />} />

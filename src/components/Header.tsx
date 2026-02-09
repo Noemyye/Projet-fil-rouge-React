@@ -87,7 +87,7 @@ export default function Header() {
               <>
               <button
                 onClick={() => logout()}
-                className="bg-stone-600 py-2 px-4 h-9 rounded-sm font-medium text-white flex items-center gap-2"
+                className="bg-black hover:bg-stone-800 py-2 px-4 h-9 rounded-sm font-medium text-white flex items-center gap-2"
               >
                 <p>Logout</p>
               </button>
@@ -98,7 +98,7 @@ export default function Header() {
               </>
             ) : (
               <Link to="/login">
-                <button className="bg-stone-600 py-2 px-4 h-9 rounded-sm font-medium text-white flex items-center gap-2">
+                <button className="bg-black hover:bg-stone-800 py-2 px-4 h-9 rounded-sm font-medium text-white flex items-center gap-2">
                   <p>Login</p>
                 </button>
               </Link>

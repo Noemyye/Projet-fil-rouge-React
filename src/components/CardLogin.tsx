@@ -38,8 +38,7 @@ export default function CardLogin({ mode }: CardLoginProps) {
     const isLogin = mode === "login";
 
     return (
-        <>
-            <div className="h-120 w-100 rounded-md p-5 flex flex-col items-center justify-center gap-8 border border-gray-400">
+            <div className="h-120 w-100 rounded-md p-5 flex flex-col items-center justify-center gap-8 border border-gray-400 shadow-xl/25">
                 <h1 className="text-3xl font-semibold">{isLogin ? "Login" : "Sign Up"}</h1>
                 {errorMsg && (
                     <p className="text-sm bg-red-200 text-red-700 w-full rounded-md p-2 border border-red-700">{errorMsg}</p>
@@ -56,19 +55,18 @@ export default function CardLogin({ mode }: CardLoginProps) {
                 </div>
                 <div className="flex flex-col items-center gap-4 w-full">
                     <button
-                        className="bg-black text-white font-semibold px-3 w-full py-1 rounded-md hover:bg-stone-700"
+                        className="bg-black hover:bg-stone-800  text-white font-semibold px-3 w-full py-1 rounded-md"
                         onClick={isLogin ? handleSignIn : handleSignUp}
                     >
                         {isLogin ? "Login" : "Sign Up"}
                     </button>
                     <Link
                         to={isLogin ? "/auth/signup" : "/auth/login"}
-                        className="text-black-30 px-3 py-1 rounded-md text-sm"
+                        className="text-black-30 px-3 py-1 rounded-md text-sm hover:underline"
                     >
                         {isLogin ? "Sign Up" : "Login"}
                     </Link>
                 </div>
             </div>
-        </>
     );
     }
