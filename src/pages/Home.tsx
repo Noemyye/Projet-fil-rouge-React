@@ -1,6 +1,5 @@
 import Mouse from '../assets/mouse.png';
 import { useState, useEffect } from 'react';
-import CardMovie from '../components/CardMovie';
 import { SAGA_CONFIG, type SagaId } from '../config/sagas';
 import ListMovie from '../components/ListMovie';
 

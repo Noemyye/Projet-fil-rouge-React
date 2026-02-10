@@ -1,4 +1,4 @@
-import EndGameImage from "../assets/end-game.jpg";
+import { getPosterSrc } from "../config/moviePosters";
 
 export interface Movie {
   id: string;
@@ -14,7 +14,7 @@ interface CardMovieProps {
 }
 
 export default function CardMovie({ movie }: CardMovieProps) {
-  const posterSrc = (movie.img as string | undefined) ?? EndGameImage;
+  const posterSrc = getPosterSrc(movie.img);
   const title = movie.title ?? "Sans titre";
   const director = movie.director ?? "—";
   const date = (movie.year as string | undefined) ?? (movie.date as string | undefined) ?? "—";

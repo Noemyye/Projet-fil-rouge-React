@@ -3,7 +3,7 @@ import { getMoviesBySaga } from "../firebase";
 import CardMovie, { type Movie } from "./CardMovie";
 
 interface ListMovieProps {
-  saga: "marvel" | "star-wars" | "hunger-games";
+  saga: "marvel" | "starwars" | "hungergames";
 }
 
 export default function ListMovie({ saga }: ListMovieProps) {

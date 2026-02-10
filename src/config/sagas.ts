@@ -1,6 +1,6 @@
 // Types et config pour rendre la page d'accueil dynamique selon la saga
 
-export type SagaId = "marvel" | "hunger-games" | "star-wars";
+export type SagaId = "marvel" | "hungergames" | "starwars";
 
 export interface SagaCharacterImage {
   src: string;
@@ -49,13 +49,13 @@ export const SAGA_CONFIG: Record<SagaId, SagaConfig> = {
       { src: MarvelIron, alt: "Iron Man", className: "w-90 h-auto translate-x-30 -rotate-15" },
     ],
   },
-  "hunger-games": {
+  hungergames: {
     backgroundImage: HGBg,
     sectionBgColor: "bg-amber-900",
     leftImages: [],
     rightImages: [],
   },
-  "star-wars": {
+  starwars: {
     backgroundImage: SWBg,
     sectionBgColor: "bg-sky-900",
     leftImages: [],

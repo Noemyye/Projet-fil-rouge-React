@@ -1,7 +1,8 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
+import { doc, setDoc } from "firebase/firestore"; 
 
 interface CardLoginProps {
     mode: "login" | "signup";
@@ -12,16 +13,23 @@ export default function CardLogin({ mode }: CardLoginProps) {
     const [password, setPassword] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const navigate = useNavigate();
+    const isLogin = mode === "login";
 
-    const handleSignUp = () => {
+    const handleSignUp = async () => {
         setErrorMsg("");
-        createUserWithEmailAndPassword(auth, email, password)
-            .then(() => {
-                navigate("/profil");
-            })
-            .catch(() => {
-                setErrorMsg(`Email or password is invalid`);
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const uid = userCredential.user.uid;
+
+            await setDoc(doc(db, "users", uid), {
+                email,
+                favorites:[],
             });
+
+            navigate("/profil");
+        } catch {
+            setErrorMsg("Email or password is invalid");
+        }
     };
 
     const handleSignIn = () => {
@@ -34,8 +42,6 @@ export default function CardLogin({ mode }: CardLoginProps) {
                 setErrorMsg('Email or password is invalid');
             });
     };
-
-    const isLogin = mode === "login";
 
     return (
             <div className="h-120 w-100 rounded-md p-5 flex flex-col items-center justify-center gap-8 border border-gray-400 shadow-xl/25">
