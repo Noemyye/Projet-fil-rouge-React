@@ -9,8 +9,10 @@ export default function Auth() {
     }
 
     return (
-        <div className="top-50 left-1/2 transform -translate-x-1/2 absolute">
-            <CardLogin mode={mode} />
+        <div className="min-h-[calc(100vh-60px)] flex items-center sm:justify-center px-4 py-10 sm:block sm:relative sm:min-h-0 sm:px-0 sm:py-0">
+            <div className="w-full sm:w-auto sm:absolute sm:top-50 sm:left-1/2 sm:-translate-x-1/2">
+                <CardLogin mode={mode} />
+            </div>
         </div>
     );
 }

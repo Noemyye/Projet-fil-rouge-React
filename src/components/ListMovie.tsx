@@ -20,7 +20,7 @@ export default function ListMovie({ saga }: ListMovieProps) {
   if (loading) return <div>Chargement...</div>;
 
   return (
-    <div className="flex flex-wrap gap-5 justify-center">
+    <div className="grid grid-cols-2 gap-4 w-full sm:flex sm:flex-wrap sm:gap-10 sm:w-250 sm:justify-start">
       {movies.map((movie) => (
         <CardMovie key={movie.id} movie={movie} />
       ))}

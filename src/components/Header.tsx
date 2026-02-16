@@ -1,19 +1,18 @@
 import Icon from '../assets/icon.png';
-import Search from '../assets/search.png';
-import Box from '../assets/box.png';
-import Notification from '../assets/notification.png';
 import Avatar from './Avatar';
+import SearchBar from './SearchBar';
 import Marvel from '../assets/marvel-logo.jpg';
 import SW from '../assets/Star-wars-logo-new-tall.png';
 import HG from '../assets/hunger-games-font.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import { onAuthStateChanged, signOut, type User } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 
 export default function Header() {
   const [user, setUser] = useState<User | null>(null);
-
+  const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -28,21 +27,32 @@ export default function Header() {
   const logout = () => {
     signOut(auth);
     setUser(null);
+    navigate('/login');
   };
 
 
   return (
-    <section className="sticky top-0 z-50 bg-white justify-between items-center flex px-18 py-3 border-b border-gray-200">
-        <div className='flex items-center h-9 gap-4'>
-            <Link to="/">
-              <img src={Icon} alt="React Logo" className="h-6 w-6"/>
-            </Link>
-            <div className='bg-stone-200 w-50 rounded-sm flex p-1 items-center'>
-                <img src={Search} className="h-3.5 w-3.5 m-1.5"/>
-                <input placeholder='Search...' className='w-full'></input>
-            </div>
+    <section className="sticky top-0 z-50 bg-white border-b border-gray-200">
+      <div className="flex items-center justify-between px-4 py-3 sm:px-8 lg:px-18">
+        <div className="flex items-center h-9 gap-3 sm:gap-4">
+          <button
+            type="button"
+            onClick={() => setMenuOpen((open) => !open)}
+            className="flex h-9 px-2 items-center justify-center rounded-sm border border-gray-300 text-gray-700 hover:bg-gray-100 lg:hidden"
+            aria-label="Menu"
+            aria-expanded={menuOpen}
+          >
+            <span className="text-xs font-semibold">Menu</span>
+          </button>
+          <Link to="/">
+            <img src={Icon} alt="React Logo" className="h-6 w-6" />
+          </Link>
+          <div className="hidden sm:block">
+            <SearchBar />
+          </div>
         </div>
-        <div className="absolute left-1/2 transform -translate-x-1/2">
+
+        <div className="absolute left-1/2 transform -translate-x-1/2 hidden lg:block">
           <ul className="flex gap-8">
             <li>
               <Link
@@ -53,8 +63,7 @@ export default function Header() {
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                 }}
-              >
-              </Link>
+              ></Link>
             </li>
             <li>
               <Link
@@ -65,8 +74,7 @@ export default function Header() {
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                 }}
-              >
-              </Link>
+              ></Link>
             </li>
             <li>
               <Link
@@ -77,33 +85,70 @@ export default function Header() {
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                 }}
-              >
-              </Link>
+              ></Link>
             </li>
           </ul>
         </div>
-        <div className='flex items-center h-9 gap-4'>
-            {user ? (
-              <>
+
+        <div className="flex items-center h-9 gap-4">
+          {user ? (
+            <>
               <button
                 onClick={() => logout()}
                 className="bg-black hover:bg-stone-800 py-2 px-4 h-9 rounded-sm font-medium text-white flex items-center gap-2"
               >
                 <p>Logout</p>
               </button>
-              <img src={Box} className="h-6 w-6 m-1.5"/>
-              <span className='h-6 border border-gray-200'/>
-              <img src={Notification} className="h-4 w-4 m-1.5"/>
               <Link to="/profil"><Avatar /></Link>
-              </>
-            ) : (
-              <Link to="/login">
-                <button className="bg-black hover:bg-stone-800 py-2 px-4 h-9 rounded-sm font-medium text-white flex items-center gap-2">
-                  <p>Login</p>
-                </button>
-              </Link>
-            )}
+            </>
+          ) : (
+            <Link to="/login">
+              <button className="bg-black hover:bg-stone-800 py-2 px-4 h-9 rounded-sm font-medium text-white flex items-center gap-2">
+                <p>Login</p>
+              </button>
+            </Link>
+          )}
         </div>
+      </div>
+
+      {menuOpen && (
+        <div className="border-t border-gray-200 bg-white lg:hidden">
+          <div className="px-4 py-3 sm:px-8">
+            <div className="sm:hidden">
+              <SearchBar />
+            </div>
+            <ul className="mt-3 flex flex-col gap-3">
+              <li>
+                <Link
+                  to="/marvel"
+                  onClick={() => setMenuOpen(false)}
+                  className="block w-full rounded-md border border-gray-200 px-3 py-2 text-sm font-medium"
+                >
+                  Marvel
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/the-hunger-games"
+                  onClick={() => setMenuOpen(false)}
+                  className="block w-full rounded-md border border-gray-200 px-3 py-2 text-sm font-medium"
+                >
+                  Hunger Games
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/star-wars"
+                  onClick={() => setMenuOpen(false)}
+                  className="block w-full rounded-md border border-gray-200 px-3 py-2 text-sm font-medium"
+                >
+                  Star Wars
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      )}
     </section>
   )
 }
