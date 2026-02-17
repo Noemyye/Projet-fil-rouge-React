@@ -1,18 +1,3 @@
-export type SagaId = "marvel" | "hungergames" | "starwars";
-
-export interface SagaCharacterImage {
-  src: string;
-  alt: string;
-  className?: string;
-}
-
-export interface SagaConfig {
-  backgroundImage: string;
-  leftImages: SagaCharacterImage[];
-  rightImages: SagaCharacterImage[];
-  sectionBgColor: string;
-}
-
 import MarvelBg from "../assets/marvel-logo.jpg";
 import MarvelAmerica from "../assets/america-removebg-preview.png";
 import MarvelHulk from "../assets/hulk-removebg-preview.png";
@@ -35,13 +20,23 @@ import StormTrooper from "../assets/stormtrooper-removebg-preview.png"
 import Vaisseau from "../assets/vaisseau-removebg-preview.png"
 import Faucon from "../assets/faucon-removebg-preview.png"
 import Leia from "../assets/leia-removebg-preview.png"
-import darkmaul from "../assets/darkmaul-removebg-preview.png"  
 import HGBg from "../assets/hunger-games.jpg";
 import SWBg from "../assets/Star-wars-logo-new-tall.png";
 
-const dropShadowStyle = {
-  filter: "drop-shadow(10px 10px 15px rgba(0, 0, 0, 1))",
-} as const;
+export type SagaId = "marvel" | "hungergames" | "starwars";
+
+export interface SagaCharacterImage {
+  src: string;
+  alt: string;
+  className?: string;
+}
+
+export interface SagaConfig {
+  backgroundImage: string;
+  leftImages: SagaCharacterImage[];
+  rightImages: SagaCharacterImage[];
+  sectionBgColor: string;
+}
 
 export const SAGA_CONFIG: Record<SagaId, SagaConfig> = {
   marvel: {

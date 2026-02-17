@@ -1,4 +1,3 @@
-
 import avengers from "../assets/avengers.jpg";
 import thor from "../assets/thor.jpg";
 import ironman from "../assets/iron_man.jpg";
@@ -20,32 +19,29 @@ import starwars8 from "../assets/starwars8.jpg";
 import starwars9 from "../assets/starwars9.jpg";
 
 
-export const POSTER_IMAGES: Record<string, string> = {
-  "avengers": avengers,
-  "thor": thor,
-  "ironman": ironman,
-  "ironman2": ironman2,
-  "hulk": hulk,
-  "captainamerica": captainamerica,
-  "hungergames1": hungergames1,
-  "hungergames2": hungergames2,
-  "hungergames3": hungergames3,
-  "hungergames4": hungergames4,
-  "starwars1": starwars1,
-  "starwars2": starwars2,
-  "starwars3": starwars3,
-  "starwars4": starwars4,
-  "starwars5": starwars5,
-  "starwars6": starwars6,
-  "starwars7": starwars7,
-  "starwars8": starwars8,
-  "starwars9": starwars9,
-};
+export function getPosterSrc(imgValue: string): string {
+ 
+  const POSTER_IMAGES: Record<string, string> = {
+    "avengers": avengers,
+    "thor": thor,
+    "ironman": ironman,
+    "ironman2": ironman2,
+    "hulk": hulk,
+    "captainamerica": captainamerica,
+    "hungergames1": hungergames1,
+    "hungergames2": hungergames2,
+    "hungergames3": hungergames3,
+    "hungergames4": hungergames4,
+    "starwars1": starwars1,
+    "starwars2": starwars2,
+    "starwars3": starwars3,
+    "starwars4": starwars4,
+    "starwars5": starwars5,
+    "starwars6": starwars6,
+    "starwars7": starwars7,
+    "starwars8": starwars8,
+    "starwars9": starwars9,
+  };
 
-export function getPosterSrc(imgValue: string | undefined): string {
-  if (!imgValue) return "";
-  if (imgValue.startsWith("http://") || imgValue.startsWith("https://")) {
-    return imgValue;
-  }
   return POSTER_IMAGES[imgValue];
 }

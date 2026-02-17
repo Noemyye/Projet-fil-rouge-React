@@ -79,7 +79,7 @@ export default function Home({ sagaId }: HomeProps) {
         <section
           className={`xl:min-h-screen flex flex-col sm:flex-row flex-wrap items-center justify-center gap-6 px-4 py-10 text-white ${config.sectionBgColor} sm:gap-8 lg:gap-12`}
         >
-            <ListMovie saga={sagaId}/>
+            <ListMovie saga={sagaId} />
         </section>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth, addComment, getUserProfile } from "../firebase";
+import { addComment, getUserProfile } from "../firebase";
+import { useAuthStore } from "../stores/useAuthLogin";
 
 interface CreateCommentProps {
   movieId: string;
@@ -12,10 +13,10 @@ export default function CreateComment({ movieId, onCommentAdded }: CreateComment
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const user = useAuthStore((state) => state.user);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const user = auth.currentUser;
     if (!user) {
       navigate("/auth/login");
       return;

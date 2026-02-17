@@ -1,21 +1,35 @@
 import { create } from 'zustand';
-
-interface User {
-    name: string;
-}
+import { onAuthStateChanged, signOut, type User } from 'firebase/auth';
+import { auth } from '../firebase';
 
 interface AuthState {
     user: User | null;
-    login: (pseudo: string) => void;
-    logout: () => void;
+    loading: boolean;
+    setUser: (user: User | null) => void;
+    setLoading: (loading: boolean) => void;
+    logout: () => Promise<void>;
+    initializeAuth: () => () => void;
 }
 
-export const useAuthLogin = create<AuthState>((set) => ({
+export const useAuthStore = create<AuthState>((set) => ({
     user: null,
+    loading: true,
 
-    login: (pseudo: string) => 
-        set({ user: { name: pseudo } }),
+    setUser: (user) => set({ user }),
+    
+    setLoading: (loading) => set({ loading }),
 
-    logout: () => 
-        set({ user: null }),
+    logout: async () => {
+        await signOut(auth);
+        set({ user: null });
+    },
+
+    initializeAuth: () => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            set({ user, loading: false });
+        });
+        return unsubscribe;
+    },
 }));
+
+export const useAuthLogin = useAuthStore;

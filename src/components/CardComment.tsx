@@ -1,8 +1,9 @@
-import { auth, deleteComment, toggleCommentLike, type CommentDoc } from "../firebase";
+import { deleteComment, toggleCommentLike, type CommentDoc } from "../firebase";
 import Avatar from "./Avatar";
 import Heart from "../assets/heart.png";
 import HeartFilled from "../assets/heart_b.png";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../stores/useAuthLogin";
 
 interface CardCommentProps {
   comment: CommentDoc & { id: string; createdAt: unknown };
@@ -24,7 +25,8 @@ function formatDate(createdAt: unknown): string {
 }
 
 export default function CardComment({ comment, onCommentChanged }: CardCommentProps) {
-  const currentUserId = auth.currentUser?.uid;
+  const user = useAuthStore((state) => state.user);
+  const currentUserId = user?.uid;
   const navigate = useNavigate();
 
   const likes = Array.isArray(comment.likes) ? comment.likes : [];

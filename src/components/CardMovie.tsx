@@ -7,10 +7,11 @@ import HeartFull from "../assets/heart-full.png";
 
 export interface Movie {
   id: string;
-  title?: string;
-  director?: string;
-  year?: string;
-  img?: string;
+  title: string;
+  director: string;
+  year: string;
+  img: string;
+  desc: string;
   [key: string]: unknown;
 }
 
@@ -24,9 +25,6 @@ export default function CardMovie({ movie }: CardMovieProps) {
   const [isLoading, setIsLoading] = useState(false);
   
   const posterSrc = getPosterSrc(movie.img);
-  const title = movie.title ?? "Sans titre";
-  const director = movie.director ?? "—";
-  const date = (movie.year as string | undefined) ?? (movie.date as string | undefined) ?? "—";
 
   useEffect(() => {
     const checkFavorite = async () => {
@@ -80,7 +78,7 @@ export default function CardMovie({ movie }: CardMovieProps) {
       <img
         src={posterSrc}
         className="w-full h-full rounded-2xl object-cover"
-        alt={title}
+        alt={movie.title}
       />
       
       <div className="absolute top-3 right-3 z-20">
@@ -100,11 +98,11 @@ export default function CardMovie({ movie }: CardMovieProps) {
 
       <div className="absolute inset-0 p-3 sm:p-5 lg:p-8 flex flex-col items-start justify-end gap-1 sm:gap-2 bg-gradient-to-t from-black/60 to-transparent rounded-2xl">
         <div className="flex gap-2 text-white/80 text-[10px] sm:text-xs xl:text-sm">
-          <p>{date}</p>
+          <p>{movie.year}</p>
           <span>-</span>
-          <p>{director}</p>
+          <p>{movie.director}</p>
         </div>
-        <div className="text-white font-semibold text-xs sm:text-sm xl:text-lg">{title}</div>
+        <div className="text-white font-semibold text-xs sm:text-sm xl:text-lg">{movie.title}</div>
       </div>
     </div>
   );

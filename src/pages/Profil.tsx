@@ -1,34 +1,28 @@
-import { onAuthStateChanged, type User } from "firebase/auth";
-import { auth, getUserFavorites, getUserProfile, getMovieById } from "../firebase";
+import { getUserFavorites, getUserProfile, getMovieById } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CardMovie, { type Movie } from "../components/CardMovie";
+import { useAuthStore } from "../stores/useAuthLogin";
 
 export default function Profil() {
   const navigate = useNavigate();
-  const [user, setUser] = useState<User | null>(null);
+  const user = useAuthStore((state) => state.user);
+  const loading = useAuthStore((state) => state.loading);
   const [username, setUsername] = useState<string>("");
   const [favoriteMovies, setFavoriteMovies] = useState<Movie[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loadingFavorites, setLoadingFavorites] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (!currentUser) {
-        navigate("/auth/login");
-        setLoading(false);
-        return;
-      }
-      setUser(currentUser);
-      setLoading(false);
-    });
-    return () => unsubscribe();
-  }, [navigate]);
+    if (!loading && !user) {
+      navigate("/auth/login");
+    }
+  }, [user, loading, navigate]);
 
   useEffect(() => {
     if (!user) return;
 
     const loadProfile = async () => {
-      setLoading(true);
+      setLoadingFavorites(true);
       try {
         const [profile, favoriteIds] = await Promise.all([
           getUserProfile(user.uid),
@@ -45,14 +39,14 @@ export default function Profil() {
       } catch (error) {
         console.error("Error loading profile:", error);
       } finally {
-        setLoading(false);
+        setLoadingFavorites(false);
       }
     };
 
     loadProfile();
   }, [user]);
 
-  if (loading && !user) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <p className="text-xl">Chargement...</p>
@@ -78,7 +72,11 @@ export default function Profil() {
           <h2 className="text-xl font-semibold text-stone-800 mb-4">
             Mes favoris ({favoriteMovies.length})
           </h2>
-          {favoriteMovies.length === 0 ? (
+          {loadingFavorites ? (
+            <div className="bg-white rounded-2xl shadow-sm p-12 text-center text-stone-500">
+              <p>Chargement des favoris...</p>
+            </div>
+          ) : favoriteMovies.length === 0 ? (
             <div className="bg-white rounded-2xl shadow-sm p-12 text-center text-stone-500">
               <p>Vous n'avez pas encore de films en favoris.</p>
               <p className="mt-2 text-sm">

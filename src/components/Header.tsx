@@ -5,31 +5,19 @@ import Marvel from '../assets/marvel-logo.jpg';
 import SW from '../assets/Star-wars-logo-new-tall.png';
 import HG from '../assets/hunger-games-font.png';
 import { Link, useNavigate } from 'react-router-dom';
-import { auth } from '../firebase';
-import { onAuthStateChanged, signOut, type User } from 'firebase/auth';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useAuthStore } from '../stores/useAuthLogin';
 
 export default function Header() {
-  const [user, setUser] = useState<User | null>(null);
+  const user = useAuthStore((state) => state.user);
+  const logoutStore = useAuthStore((state) => state.logout);
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(null);
-      }
-    });
-  }, []);
-
-  const logout = () => {
-    signOut(auth);
-    setUser(null);
+  const handleLogout = async () => {
+    await logoutStore();
     navigate('/login');
   };
-
 
   return (
     <section className="sticky top-0 z-50 bg-white border-b border-gray-200">
@@ -94,7 +82,7 @@ export default function Header() {
           {user ? (
             <>
               <button
-                onClick={() => logout()}
+                onClick={() => handleLogout()}
                 className="bg-black hover:bg-stone-800 py-2 px-4 h-9 rounded-sm font-medium text-white flex items-center gap-2"
               >
                 <p>Logout</p>

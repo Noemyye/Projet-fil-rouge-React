@@ -6,8 +6,8 @@ import Search from "../assets/search.png";
 
 interface Movie {
   id: string;
-  title?: string;
-  img?: string;
+  title: string;
+  img: string;
 }
 
 export default function SearchBar() {
