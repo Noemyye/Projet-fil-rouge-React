@@ -1,73 +1,93 @@
-# React + TypeScript + Vite
+# Projet Fil Rouge - Catalogue de Films
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Application web React permettant de parcourir des catalogues de films de différentes sagas (Marvel, Hunger Games, Star Wars), avec système d'authentification et fonctionnalités sociales.
 
-Currently, two official plugins are available:
+## Fonctionnalités
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Authentification** : Inscription, connexion et déconnexion via Firebase Auth
+- **Catalogue de films** : Parcourir les films par saga (Marvel, Hunger Games, Star Wars)
+- **Détails des films** : Page détaillée avec synopsis, réalisateur, date de sortie
+- **Favoris** : Ajouter/retirer des films en favoris (stockés dans Firestore)
+- **Commentaires** : Système de commentaires avec création et suppression
+- **Likes** : Liker les commentaires des autres utilisateurs
+- **Recherche** : Barre de recherche dynamique avec résultats en temps réel
+- **Profil utilisateur** : Voir ses films favoris
+- **Responsive** : Interface adaptée mobile et desktop
 
-## React Compiler
+## Technologies
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 19** + TypeScript
+- **Vite** - Build tool
+- **Tailwind CSS 4** - Styling
+- **Firebase** - Auth + Firestore
+- **React Router DOM 7** - Navigation
+- **Zustand** - State management (optionnel)
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```bash
+# Cloner le projet
+git clone <url-du-repo>
+cd Projet-fil-rouge-React
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# Installer les dépendances
+npm install
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# Configurer les variables d'environnement
+# Créer un fichier .env à la racine avec :
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Lancer le serveur de développement
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Commande | Description |
+|----------|-------------|
+| `npm run dev` | Démarre le serveur de développement |
+| `npm run build` | Compile le projet pour la production |
+| `npm run preview` | Prévisualise le build de production |
+| `npm run lint` | Vérifie le code avec ESLint |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Structure du projet
+
 ```
+src/
+├── assets/          # Images et ressources statiques
+├── components/      # Composants réutilisables
+│   ├── Avatar.tsx
+│   ├── CardComment.tsx
+│   ├── CardLogin.tsx
+│   ├── CardMovie.tsx
+│   ├── CreateComment.tsx
+│   ├── Header.tsx
+│   ├── ListComments.tsx
+│   ├── ListMovie.tsx
+│   └── SearchBar.tsx
+├── config/          # Configuration (sagas, posters)
+│   ├── moviePosters.ts
+│   └── sagas.ts
+├── pages/           # Pages de l'application
+│   ├── Auth.tsx
+│   ├── Home.tsx
+│   ├── Movie.tsx
+│   └── Profil.tsx
+├── stores/          # Stores Zustand
+├── firebase.ts      # Configuration et fonctions Firebase
+├── main.tsx         # Point d'entrée
+└── index.css        # Styles globaux
+```
+
+## Base de données Firestore
+
+### Collections
+
+- **movies** : Liste des films avec titre, réalisateur, année, saga, image
+- **users** : Profils utilisateurs avec email et favoris
+- **comments** : Commentaires avec movieId, userId, texte, likes
+
+## Auteur
+
+Projet réalisé dans le cadre du module Développement Web Front-End.
