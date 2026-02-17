@@ -21,7 +21,7 @@ Application web React permettant de parcourir des catalogues de films de différ
 - **Tailwind CSS 4** - Styling
 - **Firebase** - Auth + Firestore
 - **React Router DOM 7** - Navigation
-- **Zustand** - State management (optionnel)
+- **Zustand** - State management
 
 ## Installation
 
