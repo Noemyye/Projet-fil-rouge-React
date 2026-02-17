@@ -48,8 +48,6 @@ npm run dev
 |----------|-------------|
 | `npm run dev` | Démarre le serveur de développement |
 | `npm run build` | Compile le projet pour la production |
-| `npm run preview` | Prévisualise le build de production |
-| `npm run lint` | Vérifie le code avec ESLint |
 
 ## Structure du projet
 
@@ -75,6 +73,7 @@ src/
 │   ├── Movie.tsx
 │   └── Profil.tsx
 ├── stores/          # Stores Zustand
+|   └── useAuthLogin.tsx
 ├── firebase.ts      # Configuration et fonctions Firebase
 ├── main.tsx         # Point d'entrée
 └── index.css        # Styles globaux
@@ -84,7 +83,7 @@ src/
 
 ### Collections
 
-- **movies** : Liste des films avec titre, réalisateur, année, saga, image
+- **movies** : Liste des films avec titre, réalisateur, année, saga, image, description
 - **users** : Profils utilisateurs avec email et favoris
 - **comments** : Commentaires avec movieId, userId, texte, likes
 
